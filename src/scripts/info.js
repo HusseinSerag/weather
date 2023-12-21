@@ -1,5 +1,5 @@
 export  async function getInfo(city){
-    const data = fetch(`http://api.weatherapi.com/v1/forecast.json?key=69861d6fcc6846d9b36141044231912&q=${city}&days=3`,{
+    const data = fetch(`https://api.weatherapi.com/v1/forecast.json?key=69861d6fcc6846d9b36141044231912&q=${city}&days=3`,{
         mode:'cors'
     })
     
