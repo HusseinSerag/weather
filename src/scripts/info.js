@@ -37,4 +37,8 @@ export function getLocation(){
 }
 
 
- 
+ export function checkError(input){
+    if(input.value.length == 0){
+        throw new Error()
+    }
+ }

@@ -7,6 +7,7 @@ const searchInput = document.querySelector('.search')
 const SearchIcon = document.querySelector('.searchImg')
 const cancelIcon  = document.querySelector('.cancelImg')
 const slides = document.querySelectorAll('.slides .slide')
+const error = document.querySelector('.input-element-container .error')
 const selection = Array.from(DOM.main.querySelectorAll('.header .selection div'))
 DOM.loadIcons()
 
@@ -27,9 +28,29 @@ DOM.unload()
 
 
 SearchIcon.addEventListener('click',async ()=>{
+    try{
+        MyApp.checkError(searchInput)
+    }
+    catch(err){
+       error.textContent = 'Please don\'t leave this field empty!'
+        searchInput.classList.add('invalid')
+         return
+    }
+   
     let inp = searchInput.value
     DOM.load()
     const data =  await MyApp.getInfo(inp)
+    if(data.hasOwnProperty('error')){
+        
+        
+            error.textContent = 'Cannot find this location!'
+            searchInput.classList.add('invalid')
+            DOM.unload()
+             return
+        
+    }
+    searchInput.classList.remove('invalid')
+    error.textContent = ''
     attachData(data)
 DOM.RenderToday(data)
 
@@ -47,7 +68,7 @@ selection[0].classList.remove('unselected')
 
 })
 cancelIcon.addEventListener('click' , ()=>{
-    
+    searchInput.value = ''
 })
 
 

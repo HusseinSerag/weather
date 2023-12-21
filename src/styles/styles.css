@@ -42,8 +42,19 @@ body{
     width: 17px;
     height: 17px;
 }
+.input-element-container{
+    display: flex;
+    flex-direction: column;
+    gap:3px;
+    align-items: center;
+}
 input:focus{
     outline: none;
+}
+.error{
+    color:red;
+    display: inline;
+    font-size: 0.8rem;
 }
 .sidebar{
     display: flex;
@@ -250,4 +261,7 @@ display: none;
 .weather .degreeType{
     position: absolute;
     left:10px;
+}
+input.invalid{
+    border-bottom: 1px solid red;
 }
