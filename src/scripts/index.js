@@ -2,6 +2,7 @@ import * as MyApp from "./info";
 import '../styles/styles.css';
 import * as DOM from "./DOM";
 DOM.load()
+
 let data;
 const searchInput = document.querySelector('.search')
 const SearchIcon = document.querySelector('.searchImg')
@@ -51,21 +52,20 @@ SearchIcon.addEventListener('click',async ()=>{
     }
     searchInput.classList.remove('invalid')
     error.textContent = ''
-    attachData(data)
-DOM.RenderToday(data)
+   
+
 
 selection.forEach(item =>{
     item.classList.add('unselected')
     item.classList.remove('selected')
 })
 selection[0].classList.add('selected')
-
 selection[0].classList.remove('unselected')
-
     searchInput.value = ''
+    attachData(data)
+    DOM.RenderToday(data)
+    populateSlides(slides,data)
     DOM.unload()
-    
-
 })
 cancelIcon.addEventListener('click' , ()=>{
     searchInput.value = ''
