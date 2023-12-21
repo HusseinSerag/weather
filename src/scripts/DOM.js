@@ -27,6 +27,7 @@ const main = sidebar.querySelector('.main .mainImg')
 main.src = url
 }
 
+
 const mainNumber = sidebar.querySelector('.main .mainDegree .number-container[class$=number]')
     const minDegree = sidebar.querySelector('.main .mainDegree .number-container[class$=min]')
     const maxDegree = sidebar.querySelector('.main .mainDegree .number-container[class$=max]')
