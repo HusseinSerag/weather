@@ -1,6 +1,8 @@
 import searchPhoto from '../photos/magnify.png'
 import cancelIcon from '../photos/alpha-x-circle.png'
 import Loading from '../photos/giphy.gif'
+import backImg from '../photos/arrow-left.png'
+import nextImg from '../photos/arrow-right.png'
 export const main = document.querySelector('.main-container')
 const loading = document.querySelector('.loading')
 const loadingImg = document.querySelector('.loadImg img')
@@ -11,8 +13,12 @@ const loadingImg = document.querySelector('.loadImg img')
 export function loadIcons(){
 const searchImg = document.querySelector('.searchImg')
 const CancelImg = document.querySelector('.cancelImg')
+const back = document.querySelector('.controls .back img')
+const next = document.querySelector('.controls .next img')
 searchImg.src = searchPhoto
 CancelImg.src = cancelIcon
+back.src = backImg
+next.src = nextImg
 }
 
 const sidebar = document.querySelector('.sidebar')
@@ -97,3 +103,65 @@ export function load(){
 export function unload(){
     loading.classList.remove('active')
 }
+
+ function nextFn(n,length,displayDiv,points){
+return pointsMove(n,length,displayDiv,points)
+}
+ function backFn(n,length,displayDiv,points){
+    return pointsMove(n,length,displayDiv,points)
+}
+ function pointsMove(number , length,displayDiv,points){
+    const moving = document.querySelector('.moving-points')
+    if(number > length -1 ){
+        number = 0
+    }
+    else if(number < 0 ){
+        number = length-1
+    }
+    for(let i = 0 ; i < length ; i++){
+        displayDiv.classList.remove(`turn-${i}`)
+    }
+    for(let i = 0 ; i<length ; i++){
+        points[i].classList.remove('selected')
+    }
+    for(let i = 0 ; i<length ; i++){
+        moving.classList.remove(`turn-${i}`)
+    }
+    
+    points[number].classList.add('selected')
+    displayDiv.classList.add(`turn-${number}`)
+    moving.classList.add(`turn-${number}`)
+    return number
+}
+
+
+export function loadCaoursel(start=0){
+    const points = document.querySelectorAll('.points-container .points')
+    const next = document.querySelector('.controls .next')
+    const back  = document.querySelector('.controls .back')
+    
+    const slider = document.querySelector('.carousel-container .slides')
+    let currentPoint = start
+    points[start].classList.add('selected')
+    for(let i = 0 ; i < points.length ; i++){
+        
+        points[i].addEventListener('click',()=>{
+            currentPoint = i
+            pointsMove(i,points.length,slider,points)
+        })
+    }
+    next.addEventListener('click',()=>{
+        
+        currentPoint = nextFn(currentPoint+1 , points.length,slider,points)
+        
+    })
+    
+    back.addEventListener('click',()=>{
+       
+        currentPoint =  backFn(currentPoint - 1 , points.length,slider , points)
+        
+    })
+}
+
+
+

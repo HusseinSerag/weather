@@ -6,6 +6,7 @@ let data;
 const searchInput = document.querySelector('.search')
 const SearchIcon = document.querySelector('.searchImg')
 const cancelIcon  = document.querySelector('.cancelImg')
+const slides = document.querySelectorAll('.slides .slide')
 const selection = Array.from(DOM.main.querySelectorAll('.header .selection div'))
 DOM.loadIcons()
 
@@ -67,11 +68,73 @@ selection[i].addEventListener('click', ()=>{
     }else{
         DOM.RenderSelectedDate(data.forecast.forecastday[i])
     }
+   
+populateSlides(slides,data,i)
+DOM.loadCaoursel()
     
 })
 }
 }
 
+
+DOM.loadCaoursel()
+populateSlides(slides,data)
+function populateSlides(slides,data,defaultDay=0,degreeTypeIcon='C'){
+    for(let i = 0 ; i < slides.length ; i++)
+    {
+        Array.from(slides[i].children).forEach(el=>
+            {
+                slides[i].removeChild(el)
+            })
+        slides[i].appendChild(createSlide())
+        let img = slides[i].querySelector('img')
+        let hour = slides[i].querySelector('.hour')
+        let weather = slides[i].querySelector('.weather .number')
+        let degreeType = slides[i].querySelector('.weather .degreeType')
+        degreeType.textContent = degreeTypeIcon
+        let time = new Date(data.forecast.forecastday[defaultDay].hour[i].time)
+        time = `${String(time.getHours()).padStart(2, '0')}:${String(time.getMinutes()).padStart(2, '0')}`
+        img.src = data.forecast.forecastday[defaultDay].hour[i].condition.icon
+        hour.textContent =  time
+        weather.textContent =  data.forecast.forecastday[defaultDay].hour[i].temp_c
+    }
+        
+    
+}
+
+
+function createSlide(){
+
+    let slideContainer = document.createElement('div')
+    slideContainer.classList.add('slide-content')
+    let img = document.createElement('img')
+    let hour = document.createElement('div')
+    hour.classList.add('hour')
+    let weather = document.createElement('div')
+    weather.classList.add('weather')
+    let number = document.createElement('span')
+    number.classList.add('number')
+
+    let degree = document.createElement('span')
+    degree.classList.add('degree')
+    degree.textContent = 'o'
+
+    let degreeType = document.createElement('span')
+    degreeType.classList.add('degreeType')
+
+    let degreeDiv = document.createElement('span')
+    degreeDiv.appendChild(degree)
+    degreeDiv.appendChild(degreeType)
+    degreeDiv.classList.add('degreeDiv')
+    weather.appendChild(number)
+    weather.appendChild(degreeDiv)
+    
+
+    slideContainer.appendChild(img)
+    slideContainer.appendChild(hour)
+    slideContainer.appendChild(weather)
+    return slideContainer
+}
 
 
 

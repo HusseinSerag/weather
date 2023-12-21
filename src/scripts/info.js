@@ -37,15 +37,4 @@ export function getLocation(){
 }
 
 
- async function init(){
-    Clock()
-try{
-    const currentLocation = await getLocation()
-    const data = await getInfo(currentLocation)
-}
-catch{
-    getInfo('paris,france')
-}
-setInterval(Clock,1000)
-
-}
+ 
